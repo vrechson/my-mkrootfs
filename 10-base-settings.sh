@@ -16,12 +16,12 @@ echo 'KEYMAP=br-abnt2' | sudo cp /dev/stdin ./etc/vconsole.conf
 sudo chmod 644 ./etc/locale.conf
 
 # set hostname and hosts
-echo 'pc' | sudo cp /dev/stdin ./etc/hostname
+echo 'lemonslab' | sudo cp /dev/stdin ./etc/hostname
 
 cat <<EOF | sudo tee -a ./etc/hosts > /dev/null
 127.0.0.1 localhost
 ::1 localhost
-127.0.1.1 pc.localdomain pc
+127.0.1.1 lemonslab.localdomain lemonslab
 EOF
 
 # add some servers
@@ -47,8 +47,8 @@ Include = /etc/pacman.d/mirrorlist
 Include = /etc/pacman.d/chaotic-mirrorlist
 Server = https://builds.garudalinux.org/repos/\$repo/\$arch
 
-[sublime-text]
-Server = https://download.sublimetext.com/arch/stable/\$arch
+[blackarch]
+Include = /etc/pacman.d/blackarch-mirrorlist
 EOF
 
 echo 'Finished'

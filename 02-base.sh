@@ -5,7 +5,7 @@ cd /mnt
 # install base
 pacstrap -GM . base
 
-# genfstab (without ZFS cause we use zfs-mount)
-genfstab -U /mnt | sed 's/^zroot/#zroot/g' | tee -a ./etc/fstab
+# genfstab
+genfstab -U /mnt | tee -a ./etc/fstab
 
 echo 'Finished'

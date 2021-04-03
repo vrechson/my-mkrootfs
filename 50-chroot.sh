@@ -18,8 +18,8 @@ pacman-key --lsign-key 1EDDE2CDFC025D17F6DA9EC0ADAE6AD28A8F901A
 
 groupmod -g 10 wheel
 groupmod -g 100 users
-useradd -Uu 1000 -m pedrohlc
-usermod -aG users,wheel pedrohlc
+useradd -Uu 1000 -m vrechson
+usermod -aG users,wheel vrechson
 
 curl 'https://builds.garudalinux.org/repos/chaotic-aur/keyring.pkg.tar.zst' -o /tmp/keyring.pkg.tar.zst
 curl 'https://builds.garudalinux.org/repos/chaotic-aur/mirrorlist.pkg.tar.zst' -o /tmp/mirrorlist.pkg.tar.zst
