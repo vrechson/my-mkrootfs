@@ -23,31 +23,12 @@ sed -i'' "
 systemctl --root=. enable dbus-broker
 systemctl --root=. --global enable dbus-broker
 systemctl --root=. enable NetworkManager
-systemctl --root=. enable zfs-import-cache zfs-import.target
-systemctl --root=. enable zfs.target zfs-mount # better than fstab
 #systemctl --root=. enable sshd
 
 # Why Lennart, why? (boost startup)
 systemctl --root=. mask systemd-hostnamed
 
-# disable LVM (boost startup)
-sed -i'' 's/use_lvmetad = 1/use_lvmetad = 0/g' ./etc/lvm/lvm.conf
-systemctl --root=. mask lvm2-{activation{,-early},lvmetad{,.socket},lvmpolld{,.socket},monitor}
-
 # create main user
-echo '%wheel ALL=(ALL) NOPASSWD: ALL' | tee -a ./etc/sudoers > /dev/null
-
-# autologin
-mkdir -p ./etc/systemd/system/getty@tty1.service.d/
-cat <<EOF | tee ./etc/systemd/system/getty@tty1.service.d/override.conf > /dev/null
-[Service]
-ExecStart=
-ExecStart=-/usr/bin/agetty --autologin pedrohlc --noclear %I \$TERM
-Type=simple
-EOF
-
-
-# google auth
-sed -i'' -e '3i auth required pam_google_authenticator.so' /etc/pam.d/sshd
+echo '%wheel ALL=(ALL) ALL' | tee -a ./etc/sudoers > /dev/null
 
 echo 'Finished'

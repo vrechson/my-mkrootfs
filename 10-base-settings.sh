@@ -46,9 +46,6 @@ Include = /etc/pacman.d/mirrorlist
 [chaotic-aur]
 Include = /etc/pacman.d/chaotic-mirrorlist
 Server = https://builds.garudalinux.org/repos/\$repo/\$arch
-
-[blackarch]
-Include = /etc/pacman.d/blackarch-mirrorlist
 EOF
 
 echo 'Finished'

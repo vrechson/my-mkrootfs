@@ -12,9 +12,12 @@ timedatectl set-ntp true
 
 pacman-key --init
 pacman-key --populate archlinux
-# Sublime-Text
-pacman-key --keyserver hkps://hkps.pool.sks-keyservers.net -r ADAE6AD28A8F901A
-pacman-key --lsign-key 1EDDE2CDFC025D17F6DA9EC0ADAE6AD28A8F901A
+
+# Black Arch
+curl -O 'https://blackarch.org/strap.sh'
+echo d062038042c5f141755ea39dbd615e6ff9e23121 strap.sh | sha1sum -c
+chmod +x strap.sh && ./strap.sh
+rm strap.sh
 
 groupmod -g 10 wheel
 groupmod -g 100 users
@@ -33,60 +36,75 @@ powerpill -Su --noconfirm --needed --overwrite /boot/\\* \
 	sudo paru networkmanager pipewire amd-ucode \
 	linux-firmware linux-tkg-bmq-zen2{,-headers} dbus-broker \
 	\
-	zfs{-dkms,-utils} efibootmgr \
+	efibootmgr \
 	ntfs-3g dosfstools mtools exfat-utils un{rar,zip} p7zip \
-	gvfs-mtp android-udev-git sshfs usbutils \
+	android-udev-git sshfs usbutils \
 	\
-	dash fish libpam-google-authenticator mosh rsync aria2 tmux dashbinsh \
-	neovim-drop-in openssh htop bridge-utils traceroute wget \
-	android-sdk-platform-tools dnsmasq hostapd inetutils \
-	networkmanager-openvpn nm-eduroam-ufscar ca-certificates-icp_br \
+	dash fish mosh rsync aria2 tmux dashbinsh \
+	pango neovim-drop-in openssh htop traceroute wget \
+	android-sdk-platform-tools dnsmasq hostapd inetutils network-manager-applet \
+	networkmanager-openvpn nm-eduroam-ufscar ca-certificates-icp_br dhcpcd keybase-gui \
 	\
 	{,lib32-}mesa {,lib32-}libva{,-mesa-driver} {,lib32-}vulkan-{icd-loader,radeon} \
 	\
 	bluez{,-plugins,-utils} \
-	pipewire-{alsa,pulse,jack} gst-plugin-pipewire libpipewire02 \
+	pipewire-{alsa,pulse,jack} libpipewire02 \
 	\
-	sway{,bg,idle,lock} grim slurp waybar breeze{,-gtk} vimix-icon-theme-git \
-	mako wdisplays-git plasma-integration \
+	xorg xorg-server \
+	gnome gnome-tweaks gnome-shell-extensions \
 	wl-clipboard-x11 qt5-wayland xdg-desktop-portal{,-wlr-git} \
-	sway-launcher-desktop \
+	i3 i3-battery-popup-git i3lock-color i3lock-fancy-multimonitor-git libusb \
+	conky rofi arandr autorandr dunst lynis xautolock zenity samhain python-pywal \
 	\
 	alacritty nomacs pcmanfm-qt qbittorrent telegram-desktop xarchiver \
-	firefox-wayland-hg firefox-ublock-origin \
-	mpv audacious{,-plugins} gst-libav kodi-wayland spotify-dev youtube-dl-git \
-	pavucontrol \
+	firefox firefox-developer-edition firefox-nightly \
+	google-chrome google-chrome-dev chromium \
+	mpv audacious{,-plugins} spotify youtube-dl-git \
+	pavucontrol flameshot baobab discord feh gimp github-cli \
+	neofetch slack wps-office obs\
 	\
 	{,lib32-}faudio steam steam-native-runtime \
 	wine{_gecko,-mono,-tkg-staging-fsync-git} winetricks-git dxvk-mingw-git \
 	xf86-input-libinput proton-tkg-git {,lib32-}mangohud vkbasalt gamemode \
 	\
-	keybase kbfs qemu sublime-text vinagre scrcpy-git \
-	editorconfig-core-c python-pynvim hunspell-{en_US,pt-br} \
-	podman podman-compose-git crun trash-cli \
+	keybase kbfs qemu vinagre scrcpy-git \
+	editorconfig-core-c python-pynvim \
+	podman podman-compose-git docker docker-compose-bin crun trash-cli \
 	\
-	gdb ruby yarn python-pip \
+	gdb yarn python-pip code composer dbeaver genymotion php \
+	go jre-openjdk jre-openjdk-headless \
+	jre10-openjdk jre10-openjdk-headless \
+	jre11-openjdk jre11-openjdk-headless jre8-openjdk jre8-openjdk-headless \
+	maven jython \
 	\
 	gnu-free-fonts gnome-icon-theme \
 	ttf-{fira-{code,mono,sans}} ttf-borg-sans-mono \
 	ttf-{dejavu,droid,liberation,ubuntu-font-family,wps-fonts} \
 	ttf-font-awesome-4 \
-	adobe-source-han-sans-jp-fonts
+	adobe-source-han-sans-jp-fonts \
 	\
-	chaotic-mirrorlist chaotic-keyring
+	chaotic-mirrorlist chaotic-keyring \
+	\
+	wireshark-git aircrack-ng bully dsniff hostapd-wpe pixiewps \
+	ltrace strace macchanger massdns metasploit mitmproxy \
+	burpsuite nmap httprobe nuclei ffuf amass dirsearch \
+	smuggler wpscan ysoserial sqlmap zaproxy \
+	aquatone gospider jwt-tool hashid netdiscover ngrok nikto \
+	subbrute sublist3r spartan wfuzz sparty spiderfoot \
+	dex2jar ghidra jadx mousejack objection capstone \
+	aws-cli azure-cli seclists-git \
+	\
+	binwalk crunch elfutils exiv2 fcrackzip mtr radare2 \
+	responder samdump2 shuffledns socat avrude cracklib hashcat jack john
 
-chsh root -s /bin/dash
-chsh pedrohlc -s /bin/dash
+chsh root -s /bin/fish
+chsh vrechson -s /bin/fish
 
-usermod -aG audio,kvm pedrohlc
-
-chown pedrohlc:pedrohlc /home/pedrohlc/.mozilla /media/encrypted
-chmod 700 ./home/pedrohlc/.mozilla ./media/encrypted
+usermod -aG audio,kvm,wireshark,docker vrechson
 
 bootctl --path=/boot install
-zgenhostid
 EOF
 
-arch-chroot . sh -c 'echo [ROOT] && passwd root && echo [PEDROHLC] && passwd pedrohlc'
+arch-chroot . sh -c 'echo [ROOT] && passwd root && echo [VRECHSON] && passwd vrechson'
 
 echo 'Finished'
