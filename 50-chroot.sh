@@ -10,24 +10,27 @@ locale-gen
 hwclock --systohc
 timedatectl set-ntp true
 
-pacman-key --init
-pacman-key --populate archlinux
+sudo pacman-key --init
+sudo pacman-key --populate archlinux
 
 # Black Arch
-curl -O 'https://blackarch.org/strap.sh'
-echo d062038042c5f141755ea39dbd615e6ff9e23121 strap.sh | sha1sum -c
-chmod +x strap.sh && ./strap.sh
-rm strap.sh
+#curl -O 'https://blackarch.org/strap.sh'
+#echo d062038042c5f141755ea39dbd615e6ff9e23121 strap.sh | sha1sum -c
+#chmod +x strap.sh && ./strap.sh
+#rm strap.sh
 
-groupmod -g 10 wheel
-groupmod -g 100 users
-useradd -Uu 1000 -m vrechson
-usermod -aG users,wheel vrechson
+#groupmod -g 10 wheel
+#groupmod -g 100 users
+#useradd -Uu 1000 -m vrechson
+#usermod -aG users,wheel vrechson
 
-curl 'https://builds.garudalinux.org/repos/chaotic-aur/keyring.pkg.tar.zst' -o /tmp/keyring.pkg.tar.zst
-curl 'https://builds.garudalinux.org/repos/chaotic-aur/mirrorlist.pkg.tar.zst' -o /tmp/mirrorlist.pkg.tar.zst
+curl 'https://repo.jkanetwork.com/repo/chaotic-aur/x86_64/chaotic-mirrorlist-20210329-1-any.pkg.tar.zst' -o /tmp/mirrorlist.pkg.tar.zst
+curl 'https://repo.jkanetwork.com/repo/chaotic-aur/x86_64/chaotic-keyring-20210330-1-any.pkg.tar.zst' -o /tmp/keyring.pkg.tar.zst
+pacman -U --noconfirm --needed /tmp/keyring.pkg.tar.zst /tmp/mirrorlist.pkg.tar.zst
 
-sudo pacman -U /tmp/keyring.pkg.tar.zst /tmp/mirrorlist.pkg.tar.zst
+# Chaotic Aur
+sed -i'' "s/#\[chaotic-aur\]/\[chaotic-aur\]/g" ./etc/pacman.conf
+sed -i'' "s/\#Include = \/etc\/pacman.d\/chaotic-mirrorlist/Include = \/etc\/pacman.d\/chaotic-mirrorlist/g" ./etc/pacman.conf
 
 pacman -Sy --noconfirm --needed powerpill
 
@@ -82,8 +85,6 @@ powerpill -Su --noconfirm --needed --overwrite /boot/\\* \
 	ttf-{dejavu,droid,liberation,ubuntu-font-family,wps-fonts} \
 	ttf-font-awesome-4 \
 	adobe-source-han-sans-jp-fonts \
-	\
-	chaotic-mirrorlist chaotic-keyring \
 	\
 	wireshark-git aircrack-ng bully dsniff hostapd-wpe pixiewps \
 	ltrace strace macchanger massdns metasploit mitmproxy \

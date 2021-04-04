@@ -43,8 +43,8 @@ cat <<EOF | sudo tee -a ./etc/pacman.conf > /dev/null
 [multilib]
 Include = /etc/pacman.d/mirrorlist
 
-[chaotic-aur]
-Include = /etc/pacman.d/chaotic-mirrorlist
+#[chaotic-aur]
+#Include = /etc/pacman.d/chaotic-mirrorlist
 EOF
 
 echo 'Finished'
