@@ -8,7 +8,7 @@ arch-chroot . /usr/bin/bash <<EOF
 set -o errexit
 
 mkinitcpio -Pv
-bootctl --path=/boot/ install
+bootctl --no-variables --path=/boot/ install
 
 echo 'default arch' | sudo tee /boot/loader/loader.conf > /dev/null
 echo 'timeout 3' | sudo tee -a /boot/loader/loader.conf > /dev/null
