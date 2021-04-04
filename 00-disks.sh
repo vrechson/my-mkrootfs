@@ -1,8 +1,11 @@
 #!/usr/bin/env sh
 set -o errexit
 
-# create boot
+# create EFI partition
 mkfs.vfat -F32 /dev/sdb1
+
+# create boot -- only if it is using grub
+# mkfs.ext2 /dev/sdb2
 
 # create rootfs
 cryptsetup luksFormat /dev/sdb2

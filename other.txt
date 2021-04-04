@@ -6,12 +6,14 @@ other less interesting packages:
   f2fs-utils busybox-git
 
 # Printer
-  cups sane print-manager system-config-printer
+  cups sane print-manager system-config-printer simple-scan
 
 cadences requires alsa-utils for configuring and 'hw:1,0'
 pcmanfm-qt can use lxqt-sudo
 
 dotfiles at: https://github.com/vrechson/.dotfiles
+
+sudo pacman -S extra/arch-install-scripts
 
 Hey Vrechinho, don't forget backuping-up:
 ~
